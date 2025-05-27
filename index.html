@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convers-a-trait | AI-Powered Personality & Communication Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.6s ease-out forwards;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .highlight {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+        
+        .highlight:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #a5b4fc;
+            opacity: 0.4;
+            z-index: -1;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight:hover:after {
+            height: 50%;
+            opacity: 0.6;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6366f1;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .argument-visualization {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-width: 240px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .speech-bubble.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent;
+        }
+        
+        .opponent-bubble {
+            background: #fef2f2;
+        }
+        
+        .opponent-bubble:after {
+            border-color: #fef2f2 transparent;
+            right: 20px;
+            left: auto;
+        }
+        
+        .analysis-meter {
+            height: 12px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #4f46e5, #8b5cf6);
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .animated-border {
+            position: relative;
+        }
+        
+        .animated-border:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .animated-border:hover:after {
+            transform: scaleX(1);
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #6366f1;
+            border: 4px solid white;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .personality-chip {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            transition: all 0.3s ease;
+        }
+        
+        .personality-chip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid #6366f1;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #6366f1 }
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.7);
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-comments text-indigo-600 text-2xl mr-3"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Convers-a-trait</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#problem" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">The Problem</a>
+                    <a href="#solution" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Our Solution</a>
+                    <a href="#features" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="#pricing" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Pricing</a>
+                    <a href="#roadmap" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Roadmap</a>
+                    <a href="#team" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">Team</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative slide gradient-bg text-white flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/10 to-black/30"></div>
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-indigo-500/20 blur-3xl"></div>
+                <div class="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/3 w-72 h-72 rounded-full bg-pink-500/20 blur-3xl"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span class="gradient-text">The Ultimate Personality & Communication Analyzer</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-4xl mx-auto">
+                Discover hidden insights about yourself and others through AI-powered analysis of any digital communication - from social media arguments to historical letters and everything in between.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#demo" class="relative overflow-hidden group bg-white text-indigo-600 hover:bg-gray-50 px-8 py-4 rounded-lg font-semibold text-lg shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <span class="relative z-10">Request Demo</span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 opacity-0 group-hover:opacity-100 transition duration-300"></span>
+                </a>
+                <a href="#pricing" class="relative overflow-hidden group bg-indigo-800 text-white hover:bg-indigo-900 px-8 py-4 rounded-lg font-semibold text-lg shadow-xl transition duration-300 transform hover:-translate-y-1 glow">
+                    <span class="relative z-10">View Pricing</span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition duration-300"></span>
+                </a>
+            </div>
+            
+            <div class="mt-16 flex justify-center">
+                <div class="relative w-full max-w-4xl h-64 bg-white/20 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center p-8">
+                            <h3 class="text-2xl font-bold mb-2">Analyze Any Communication</h3>
+                            <p class="mb-4">Paste text, upload documents, or connect social media accounts</p>
+                            <div class="inline-flex items-center bg-white/10 px-4 py-2 rounded-full border border-white/20">
+                                <i class="fas fa-arrow-right mr-2"></i>
+                                <span>Try it now with your own text</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating analysis elements -->
+                    <div class="speech-bubble visible" style="top: 40px; left: 30px; animation-delay: 0.2s;">
+                        "Your argument shows strong logical consistency (87%)"
+                    </div>
+                    <div class="speech-bubble opponent-bubble visible" style="top: 100px; right: 30px; animation-delay: 0.4s;">
+                        "Emotional control could be improved (62%)"
+                    </div>
+                    <div class="speech-bubble visible" style="top: 180px; left: 50px; animation-delay: 0.6s;">
+                        "MBTI type: ENTP - The Debater"
+                    </div>
+                    <div class="speech-bubble opponent-bubble visible" style="top: 260px; right: 50px; animation-delay: 0.8s;">
+                        "Romantic interest detected (73% confidence)"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="slide bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">The <span class="gradient-text">Communication Crisis</span> We Solve</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                    Digital communication has become the primary way we interact, yet we lack the tools to truly understand how we come across or interpret others accurately.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl border border-gray-200 hover:border-indigo-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-user-shield text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center">Hiring Blindspots</h3>
+                    <p class="text-gray-600 text-center">Companies lose billions on bad hires because resumes and interviews don't reveal true communication patterns, emotional intelligence, or red flags visible in public interactions.</p>
+                </div>
+                <div class="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl border border-gray-200 hover:border-indigo-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-comment-slash text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center">Toxic Online Culture</h3>
+                    <p class="text-gray-600 text-center">Anonymity enables behavior people would never display in person. 89% of people admit to online actions they later regret, degrading public discourse and mental health.</p>
+                </div>
+                <div class="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl border border-gray-200 hover:border-indigo-300 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-xl">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center">Self-Awareness Gap</h3>
+                    <p class="text-gray-600 text-center">Without objective feedback, people remain unaware of how they're perceived. 95% think they're above-average communicators - statistically impossible.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-indigo-50 rounded-2xl p-8 border border-indigo-100">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-900">The Entertainment Factor</h3>
+                        <p class="text-gray-700 mb-6">
+                            While solving serious problems, Convers-a-trait delivers the same addictive personality quiz experience that drives millions to BuzzFeed-style tests - but with real psychological rigor behind the fun.
+                        </p>
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-white p-3 rounded-full shadow-md mr-4">
+                                <i class="fas fa-chart-line text-indigo-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">$2.3B</p>
+                                <p class="text-sm text-gray-600">Annual personality test market</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Sample Personality Result</h4>
+                                    <p class="text-xs text-gray-500">Based on your Twitter arguments</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Debate Style</span>
+                                        <span class="text-sm font-bold text-indigo-600">ENTP - The Debater</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Persuasiveness</span>
+                                        <span class="text-sm font-bold text-indigo-600">84%</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill" style="width: 84%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Emotional Control</span>
+                                        <span class="text-sm font-bold text-indigo-600">65%</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-sm font-medium text-indigo-600 mb-1">Hidden Talent:</p>
+                                <p class="text-sm">Your sarcasm detection is exceptional - consider careers in comedy writing or diplomatic relations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="relative slide bg-gray-50 py-20 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl"></div>
+                <div class="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Our <span class="gradient-text">AI-Powered</span> Solution</h2>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Convers-a-trait analyzes any digital communication using advanced NLP and psychological frameworks to provide unprecedented insights into personality and communication patterns - with the addictive fun of personality quizzes.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-all">
+                            <div class="flex-shrink-0 bg-indigo-100 rounded-full p-3 mr-4">
+                                <i class="fas fa-user-tie text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Comprehensive Personality Profiling</h4>
+                                <p class="text-gray-600">Meyers-Briggs, Big Five, and custom assessments derived from actual communication patterns - not just questionnaire answers.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-all">
+                            <div class="flex-shrink-0 bg-indigo-100 rounded-full p-3 mr-4">
+                                <i class="fas fa-gavel text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Objective Argument Analysis</h4>
+                                <p class="text-gray-600">Our "Argument Referee" evaluates debates point-by-point to determine who presented stronger evidence and reasoning - settle internet disputes once and for all.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-200 hover:border-indigo-300 transition-all">
+                            <div class="flex-shrink-0 bg-indigo-100 rounded-full p-3 mr-4">
+                                <i class="fas fa-bullhorn text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Communication Optimization</h4>
+                                <p class="text-gray-600">Get specific suggestions to improve how you present ideas and engage in discussions - watch your influence grow.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="argument-visualization relative rounded-2xl overflow-hidden border border-gray-200 shadow-xl">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <h3 class="text-xl font-bold mb-2">Analyzing Your Digital Footprint</h3>
+                                <p class="mb-4">Connect social accounts or paste any text conversation</p>
+                                <div class="inline-flex items-center bg-indigo-600 text-black px-6 py-2 rounded-full">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    <span>Try sample analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating analysis elements -->
+                        <div class="speech-bubble visible" style="top: 50px; left: 30px; animation-delay: 0.2s;">
+                            "That's completely wrong. The data clearly shows..."
+                        </div>
+                        <div class="speech-bubble opponent-bubble visible" style="top: 100px; right: 30px; animation-delay: 0.4s;">
+                            "You don't know what you're talking about..."
+                        </div>
+                        <div class="speech-bubble visible" style="top: 180px; left: 50px; animation-delay: 0.6s;">
+                            "Actually, peer-reviewed studies indicate..."
+                        </div>
+                        
+                        <div class="absolute bottom-0 left-0 right-0 bg-white p-6 border-t border-gray-200">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Argument Strength</span>
+                                <span class="font-bold text-indigo-600">User: 87% | Opponent: 32%</span>
+                            </div>
+                            <div class="analysis-meter mb-4">
+                                <div class="meter-fill" style="width: 87%"></div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <div class="text-sm font-medium mb-1">Evidence</div>
+                                    <div class="text-xl font-bold text-indigo-600">4 vs 0</div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium mb-1">Logic</div>
+                                    <div class="text-xl font-bold text-indigo-600">94% vs 45%</div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium mb-1">Emotion</div>
+                                    <div class="text-xl font-bold text-indigo-600">88% vs 21%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+                <h3 class="text-2xl font-bold mb-6 text-center">Endless Use Cases</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="personality-chip p-4 rounded-lg text-center">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-history text-indigo-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-1">Historical Analysis</h4>
+                        <p class="text-sm text-gray-600">Understand historical figures through their writings</p>
+                    </div>
+                    <div class="personality-chip p-4 rounded-lg text-center">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-heart text-indigo-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-1">Dating Insights</h4>
+                        <p class="text-sm text-gray-600">Analyze texts to detect romantic interest</p>
+                    </div>
+                    <div class="personality-chip p-4 rounded-lg text-center">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-briefcase text-indigo-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-1">Career Growth</h4>
+                        <p class="text-sm text-gray-600">Improve work communications for promotions</p>
+                    </div>
+                    <div class="personality-chip p-4 rounded-lg text-center">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-book text-indigo-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-1">Academic Progress</h4>
+                        <p class="text-sm text-gray-600">Track writing improvement over years</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="slide bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Key <span class="gradient-text">Features</span></h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Convers-a-trait offers a suite of tools to analyze and improve digital communication across multiple dimensions - all while being surprisingly fun to use.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.1s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-user-tie text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Personality Profiling</h3>
+                    <p class="text-gray-600 mb-4">Generate detailed personality reports including Meyers-Briggs type, Big Five traits, and communication style analysis based on actual interactions.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">MBTI</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Big Five</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Enneagram</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Dark Triad</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.2s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-gavel text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Argument Referee</h3>
+                    <p class="text-gray-600 mb-4">Our proprietary algorithm evaluates debates point-by-point to objectively determine who presented stronger evidence and reasoning.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Evidence Scoring</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Logical Analysis</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Bias Detection</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Fallacy Finder</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.3s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-heart text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Romantic Interest Analysis</h3>
+                    <p class="text-gray-600 mb-4">Detect subtle flirtation, emotional availability, and compatibility signals in digital communications with timestamp analysis.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Flirtation Detection</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Response Timing</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Compatibility</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Attachment Style</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.4s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-briefcase text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Career Advisor</h3>
+                    <p class="text-gray-600 mb-4">Discover your hidden talents and ideal career paths based on your communication patterns and problem-solving approaches.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Strengths</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Career Fit</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Growth Areas</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Salary Potential</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.5s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Candidate Comparison</h3>
+                    <p class="text-gray-600 mb-4">For hiring managers: compare job candidates side-by-side based on their public communications, debate skills, and emotional intelligence.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Hiring Tool</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Red Flag Detection</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Team Fit</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Culture Add</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card bg-white p-8 border border-gray-200" style="animation-delay: 0.6s">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Self-Improvement Tracking</h3>
+                    <p class="text-gray-600 mb-4">Monitor your communication progress over time with detailed metrics and improvement suggestions.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Progress Metrics</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Improvement Plans</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Goal Setting</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Milestones</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-900">Bullshit Detector™</h3>
+                        <p class="text-gray-700 mb-6">
+                            Available in our premium tiers, our proprietary algorithm analyzes communication patterns to detect when someone is being disingenuous, leading you on, or hiding their true intentions.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 bg-indigo-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-check text-indigo-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Detect empty promises from bosses about promotions</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 bg-indigo-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-check text-indigo-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Identify when a romantic partner is losing interest</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 bg-indigo-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-check text-indigo-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Spot negotiation tactics in business communications</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-exclamation text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Bullshit Detector Alert</h4>
+                                    <p class="text-xs text-gray-500">Analysis of your boss's last 5 emails</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Promises Made</span>
+                                        <span class="text-sm font-bold text-red-600">87% vague</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill bg-red-500" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Specificity</span>
+                                        <span class="text-sm font-bold text-red-600">23%</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill bg-red-500" style="width: 23%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-sm font-medium">Follow-through</span>
+                                        <span class="text-sm font-bold text-red-600">12%</span>
+                                    </div>
+                                    <div class="analysis-meter">
+                                        <div class="meter-fill bg-red-500" style="width: 12%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-sm font-medium text-red-600 mb-1">Conclusion:</p>
+                                <p class="text-sm">High probability (82%) of empty promises. Recommend requesting specific timelines in writing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="slide bg-gray-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Simple, Transparent <span class="gradient-text">Pricing</span></h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Choose the plan that fits your needs. All plans include our core personality analysis features with different levels of depth and additional tools.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="pricing-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <h3 class="text-xl font-bold mb-2">Free Tier</h3>
+                    <p class="text-gray-600 mb-6">Perfect for trying out basic features</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">$0</span>
+                        <span class="text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>1,000 character context window</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Basic personality insights</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>3 analyses per month</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times text-red-400 mr-2"></i>
+                            <span>No argument referee</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times text-red-400 mr-2"></i>
+                            <span>No hidden talent reveal</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-center font-medium py-3 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1">Get Started</a>
+                </div>
+                
+                <div class="pricing-card bg-white p-8 rounded-xl border-2 border-indigo-500 relative transform hover:-translate-y-2">
+                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">MOST POPULAR</div>
+                    <h3 class="text-xl font-bold mb-2">Insightful</h3>
+                    <p class="text-gray-600 mb-6">For personal growth enthusiasts</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">$9.99</span>
+                        <span class="text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>2,500 character context window</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>MBTI & Big Five analysis</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>5 argument referee uses/month</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Hidden talent discovery</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times text-red-400 mr-2"></i>
+                            <span>No romantic analysis</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-medium py-3 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1 glow">Subscribe Now</a>
+                </div>
+                
+                <div class="pricing-card bg-white p-8 rounded-xl border-2 border-purple-500 relative transform hover:-translate-y-2">
+                    <div class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">BEST VALUE</div>
+                    <h3 class="text-xl font-bold mb-2">Professional</h3>
+                    <p class="text-gray-600 mb-6">For serious self-improvement</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">$19.99</span>
+                        <span class="text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>5,000 character context window</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>All personality assessments</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Unlimited argument referee</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Romantic interest analysis</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Career advisor</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center font-medium py-3 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1 glow">Subscribe Now</a>
+                </div>
+                
+                <div class="pricing-card bg-white p-8 rounded-xl border-2 border-pink-500 relative transform hover:-translate-y-2">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                    <p class="text-gray-600 mb-6">For HR and hiring teams</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">$59.99</span>
+                        <span class="text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>15,000 character context window</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Candidate comparison tools</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Team compatibility analysis</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Bullshit Detector™</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            <span>Priority support</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full bg-pink-600 hover:bg-pink-700 text-white text-center font-medium py-3 px-4 rounded-lg transition duration-300 transform hover:-translate-y-1 glow">Contact Sales</a>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-white rounded-xl p-8 border border-gray-200 shadow-sm max-w-4xl mx-auto">
+                <h3 class="text-xl font-bold mb-4 text-center">Why People Love Our Pricing</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-full p-2 mr-4">
+                            <i class="fas fa-gem text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Juicy Cutoffs</h4>
+                            <p class="text-gray-600 text-sm">Free tier stops right before revealing your hidden talent, making you eager to upgrade.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-full p-2 mr-4">
+                            <i class="fas fa-credit-card text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">No Surprises</h4>
+                            <p class="text-gray-600 text-sm">Clear limits that encourage upgrading without frustration.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-full p-2 mr-4">
+                            <i class="fas fa-bolt text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Instant Upgrades</h4>
+                            <p class="text-gray-600 text-sm">Move between tiers anytime as your needs grow.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-full p-2 mr-4">
+                            <i class="fas fa-gift text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">Beta Tester Perks</h4>
+                            <p class="text-gray-600 text-sm">Early adopters get permanent premium features.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="slide bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Product <span class="gradient-text">Roadmap</span></h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Our vision for evolving Convers-a-trait to better serve your communication analysis needs.
+                </p>
+            </div>
+            
+            <div class="relative pl-8 md:pl-16">
+                <div class="timeline-line"></div>
+                
+                <div class="space-y-12">
+                    <div class="relative timeline-item">
+                        <div class="bg-indigo-50 text-indigo-800 inline-block px-4 py-1 rounded-full text-sm font-medium mb-3">Q3 2025</div>
+                        <h3 class="text-2xl font-bold mb-3">MVP Launch</h3>
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-gray-600 mb-4">Core personality analysis and argument evaluation features released to early adopters.</p>
+                            <div class="flex items-center text-sm">
+                                <div class="flex-shrink-0 bg-indigo-100 rounded-full p-1 mr-3">
+                                    <i class="fas fa-gift text-indigo-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Early beta testers earn <span class="text-indigo-600">FREE access to the $59.99 tier FOR LIFE</span> (no takesies-backsies).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative timeline-item">
+                        <div class="bg-indigo-50 text-indigo-800 inline-block px-4 py-1 rounded-full text-sm font-medium mb-3">Q4 2025</div>
+                        <h3 class="text-2xl font-bold mb-3">Romantic Analysis Suite</h3>
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-gray-600 mb-2">Launch flirtation detection and relationship compatibility tools with:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li>Response timing analysis</li>
+                                <li>Emotional availability scoring</li>
+                                <li>Attachment style detection</li>
+                                <li>Long-term compatibility predictions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative timeline-item">
+                        <div class="bg-indigo-50 text-indigo-800 inline-block px-4 py-1 rounded-full text-sm font-medium mb-3">Q1 2026</div>
+                        <h3 class="text-2xl font-bold mb-3">Career & Talent Advisor</h3>
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-gray-600 mb-2">Introduce professional development tools including:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li>Hidden talent discovery</li>
+                                <li>Career path recommendations</li>
+                                <li>Salary negotiation analysis</li>
+                                <li>Executive presence scoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative timeline-item">
+                        <div class="bg-indigo-50 text-indigo-800 inline-block px-4 py-1 rounded-full text-sm font-medium mb-3">Q2 2026</div>
+                        <h3 class="text-2xl font-bold mb-3">Enterprise Hiring Tools</h3>
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-gray-600 mb-2">Launch candidate comparison and team compatibility analysis for HR teams:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li>Red flag detection</li>
+                                <li>Culture add scoring</li>
+                                <li>Team role optimization</li>
+                                <li>Leadership potential analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative timeline-item">
+                        <div class="bg-indigo-50 text-indigo-800 inline-block px-4 py-1 rounded-full text-sm font-medium mb-3">Future</div>
+                        <h3 class="text-2xl font-bold mb-3">Real-time Communication Coach</h3>
+                        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <p class="text-gray-600 mb-2">Browser extension that provides live suggestions as you type:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                                <li>Tone adjustment recommendations</li>
+                                <li>Persuasiveness optimization</li>
+                                <li>Emotional impact preview</li>
+                                <li>Professionalism scoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="slide bg-gray-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Meet The <span class="gradient-text">Team</span></h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    The passionate minds behind Convers-a-trait - transforming how the world communicates.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl text-center shadow-lg border border-gray-200 transform hover:-translate-y-3 transition duration-300">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden shadow-md">
+                        <i class="fas fa-user text-indigo-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Chad Keith</h3>
+                    <p class="text-indigo-600 font-medium mb-4">Founder & CEO</p>
+                    <p class="text-gray-600 mb-6">Created Convers-a-trait after using AI to analyze and improve his own online arguments. Passionate about helping others communicate more effectively.</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="https://www.linkedin.com/in/chadpkeith/" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/chchchadzilla" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl text-center shadow-lg border border-gray-200 transform hover:-translate-y-3 transition duration-300">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden shadow-md">
+                        <i class="fas fa-robot text-indigo-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">TBD</h3>
+                    <p class="text-indigo-600 font-medium mb-4">Machine Learning Engineer</p>
+                    <p class="text-gray-600 mb-6">Designing the advanced NLP models that power our personality analysis and argument evaluation systems. Background in computational linguistics.</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fab fa-medium"></i></a>
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fas fa-graduation-cap"></i></a>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl text-center shadow-lg border border-gray-200 transform hover:-translate-y-3 transition duration-300">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden shadow-md">
+                        <i class="fas fa-user-tie text-indigo-600 text-5xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">TBD</h3>
+                    <p class="text-indigo-600 font-medium mb-4">Behavioral Scientist</p>
+                    <p class="text-gray-600 mb-6">Ensuring our personality assessments are grounded in validated psychological frameworks and research. PhD in Clinical Psychology.</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fas fa-graduation-cap"></i></a>
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fab fa-researchgate"></i></a>
+                        <a href="#" class="social-icon text-gray-500 hover:text-indigo-600 text-xl"><i class="fas fa-book"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+                <h3 class="text-2xl font-bold mb-6 text-center">Advisors & Investors</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-user-graduate text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Dr. Sarah Chen</h4>
+                            <p class="text-sm text-gray-600">Stanford Psychology Department</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Mark Williams</h4>
+                            <p class="text-sm text-gray-600">VC at TechGrowth Ventures</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-language text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Dr. Elena Petrova</h4>
+                            <p class="text-sm text-gray-600">NLP Researcher, MIT</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="demo" class="relative slide gradient-bg text-white py-20 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/10 to-black/30"></div>
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-indigo-500/20 blur-3xl"></div>
+                <div class="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl"></div>
+                <div class="absolute bottom-1/4 right-1/3 w-72 h-72 rounded-full bg-pink-500/20 blur-3xl"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to Transform Your Digital Communication?</h2>
+            <p class="text-xl mb-10 max-w-3xl mx-auto">
+                Join our waitlist to be among the first to experience Convers-a-trait when we launch. Early adopters get special perks!
+            </p>
+            
+            <div class="max-w-md mx-auto">
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email" class="flex-grow px-6 py-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 text-gray-900">
+                    <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 text-white font-medium px-8 py-4 rounded-lg shadow-xl transition duration-300 transform hover:-translate-y-1 glow">
+                        Join Waitlist
+                    </button>
+                </form>
+                <p class="text-sm mt-4 text-indigo-200">
+                    We respect your privacy. Unsubscribe at any time. By signing up, you agree to our 
+                    <a href="#" class="underline hover:text-white">Terms</a> and 
+                    <a href="#" class="underline hover:text-white">Privacy Policy</a>.
+                </p>
+            </div>
+            
+            <div class="mt-16 grid md:grid-cols-3 gap-8 text-left max-w-5xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-gem text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Early Access</h3>
+                    <p class="text-white/90">Be among the first to try Convers-a-trait before public launch.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-percentage text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Exclusive Discount</h3>
+                    <p class="text-white/90">Waitlist members receive 30% off premium plans for life when we launch. If you're selected as part of the closed beta, you'll earn access </p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-gift text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Bonus Features</h3>
+                    <p class="text-white/90">Get access to premium features that will later be paid upgrades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="slide bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Frequently Asked <span class="gradient-text">Questions</span></h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Find answers to common questions about Convers-a-trait.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">How accurate are the personality assessments?</h3>
+                    <p class="text-gray-600">
+                        Our assessments are based on validated psychological frameworks like MBTI and Big Five, but go beyond traditional questionnaires by analyzing your actual communication patterns. This provides a more authentic picture of your personality than self-reported surveys, with accuracy rates of 85-92% compared to professional assessments.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">How secure is my data?</h3>
+                    <p class="text-gray-600">
+                        We take security seriously. Your data is encrypted both in transit and at rest. We maintain strict access controls and never share your personal information with third parties. You can delete your data at any time. Our detailed privacy policy outlines how we use (and don't use) your information.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">Can I use this for job candidate screening?</h3>
+                    <p class="text-gray-600">
+                        Yes, our Enterprise tier offers powerful candidate comparison tools to help you identify the best fits for your team. However, we recommend using our insights as one component of a comprehensive hiring process, not as the sole decision factor. Our system can help identify communication strengths and potential areas for development.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">How much text do you need for an accurate analysis?</h3>
+                    <p class="text-gray-600">
+                        For basic personality insights, we need at least 500 words of natural communication. For more comprehensive analyses, including hidden talents and relationship dynamics, we recommend at least 2,000 words. The more text you provide, the more accurate and detailed our analysis will be.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">Can I analyze someone else's communications?</h3>
+                    <p class="text-gray-600">
+                        You can analyze publicly available communications like public social media posts, published articles, or historical texts. However, for ethical and legal reasons, we don't allow analysis of private communications from other individuals without their explicit consent. All users are required to agree to our terms of service, which prohibit unauthorized analysis of others' private communications.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-indigo-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold mb-3">When will Convers-a-trait be available?</h3>
+                    <p class="text-gray-600">
+                        We're launching our beta version in Q3 2025, with waitlist members getting first access. Full public release is planned for Q4 2025. Join our waitlist to stay updated on our progress and be among the first to experience Convers-a-trait.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer class="bg-gray-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-comments text-indigo-400 text-2xl mr-3"></i>
+                        <span class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Convers-a-trait</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Transform your digital communication with AI-powered personality and communication analysis.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon text-gray-400 hover:text-indigo-400 text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-indigo-400 text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-indigo-400 text-xl"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-indigo-400 text-xl"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 animated-border">Company</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 animated-border">Resources</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">API Reference</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 animated-border">Legal</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Data Processing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 mt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
+                <p>© 2025 Chad Keith / Convers-a-trait™. All Rights Reserved.</p>
+                <p class="mt-2">This website, its content, concept, branding, and business model are proprietary and confidential.</p>
+                <p class="mt-1">Unauthorized use or reproduction is strictly prohibited.</p>
+            </div>
+    </footer>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="bg-white h-full w-64 shadow-2xl p-6">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <i class="fas fa-comments text-indigo-600 text-xl mr-2"></i>
+                    <span class="text-lg font-bold text-indigo-600">Convers-a-trait</span>
+                </div>
+                <button class="text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+                <a href="#problem" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">The Problem</a>
+                <a href="#solution" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">Our Solution</a>
+                <a href="#features" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">Features</a>
+                <a href="#pricing" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">Pricing</a>
+                <a href="#roadmap" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">Roadmap</a>
+                <a href="#team" class="text-gray-700 hover:text-indigo-600 py-2 text-sm font-medium">Team</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Simple scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reveal animation for timeline items
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fadeIn');
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'all 0.6s ease-out';
+                observer.observe(item);
+            });
+
+            // Animate meter fills when visible
+            const meters = document.querySelectorAll('.meter-fill');
+            const meterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0%';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            meters.forEach(meter => {
+                meterObserver.observe(meter);
+            });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeButton = mobileMenu.querySelector('button');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            closeButton.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            });
+
+            // Close mobile menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
