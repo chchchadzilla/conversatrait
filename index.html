@@ -41,7 +41,7 @@
         }
         
         .gradient-text {
-            background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
+            background: linear-gradient(90deg, #d998f8, #d7b89f, #d9f6ef);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -129,15 +129,15 @@
         
         .speech-bubble {
             position: absolute;
-            background: white;
+            background: linear-gradient(7deg, #ffffff, #0ff0ff);
             border-radius: 1.5rem;
-            padding: 1.5rem;
+            padding: 1.0rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            max-width: 240px;
-            animation: float 6s ease-in-out infinite;
+            max-width: 200px;
+            animation: float 12s ease-in-out infinite;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+            transform: translateY(80px);
+            transition: all 3.5s ease;
         }
         
         .speech-bubble.visible {
@@ -150,9 +150,10 @@
             position: absolute;
             bottom: -10px;
             left: 20px;
-            border-width: 10px 10px 0;
-            border-style: solid;
-            border-color: white transparent;
+            border-width: 20px 2px 9px;
+            border-style: overflow-hidden;
+            border-color: linear-gradient(350deg, #ffffff, #ffffff);
+
         }
         
         .opponent-bubble {
@@ -341,7 +342,7 @@
                 <div class="relative w-full max-w-4xl h-64 bg-white/20 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20">
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="text-center p-8">
-                            <h3 class="text-2xl font-bold mb-2">Analyze Any Communication</h3>
+                            <h3 class="text-2xl text-black font-bold mb-2">Analyze Any Communication</h3>
                             <p class="mb-4">Paste text, upload documents, or connect social media accounts</p>
                             <div class="inline-flex items-center bg-white/10 px-4 py-2 rounded-full border border-white/20">
                                 <i class="fas fa-arrow-right mr-2"></i>
@@ -351,16 +352,16 @@
                     </div>
                     
                     <!-- Floating analysis elements -->
-                    <div class="speech-bubble visible" style="top: 40px; left: 30px; animation-delay: 0.2s;">
+                    <div class="speech-bubble visible text-black" style="top: 40px; left: 30px; animation-delay: 0.2s;">
                         "Your argument shows strong logical consistency (87%)"
                     </div>
-                    <div class="speech-bubble opponent-bubble visible" style="top: 100px; right: 30px; animation-delay: 0.4s;">
+                    <div class="speech-bubble opponent-bubble visible text-black" style="top: 100px; right: 30px; animation-delay: 0.4s;">
                         "Emotional control could be improved (62%)"
                     </div>
-                    <div class="speech-bubble visible" style="top: 180px; left: 50px; animation-delay: 0.6s;">
+                    <div class="speech-bubble visible text-black" style="top: 180px; left: 50px; animation-delay: 0.6s;">
                         "MBTI type: ENTP - The Debater"
                     </div>
-                    <div class="speech-bubble opponent-bubble visible" style="top: 260px; right: 50px; animation-delay: 0.8s;">
+                    <div class="speech-bubble opponent-bubble visible text-black" style="top: 260px; right: 50px; animation-delay: 0.8s;">
                         "Romantic interest detected (73% confidence)"
                     </div>
                 </div>
@@ -939,8 +940,8 @@
                             <i class="fas fa-gem text-indigo-600"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold mb-1">Generous Free Tier</h4>
-                            <p class="text-gray-600 text-sm">Free tier provides more than you'd expect from any free trial. Don't let that fool you into thinking that's where it stops, though. There's SO much more.</p>
+                            <h4 class="font-bold mb-1">Juicy Cutoffs</h4>
+                            <p class="text-gray-600 text-sm">Free tier stops right before revealing your hidden talent, making you eager to upgrade.</p>
                         </div>
                     </div>
                     <div class="flex items-start">
@@ -1077,10 +1078,11 @@
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-xl text-center shadow-lg border border-gray-200 transform hover:-translate-y-3 transition duration-300">
                     <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center overflow-hidden shadow-md">
-                        <i class="fas fa-user text-indigo-600 text-5xl"></i>
+                        <!-- Replace the icon with your image -->
+                        <img src="https://github.com/chchchadzilla/conversatrait/blob/main/chad.png?raw=true" alt="Chad Keith" class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-xl font-bold mb-1">Chad Keith</h3>
                     <p class="text-indigo-600 font-medium mb-4">Founder & CEO</p>
@@ -1320,11 +1322,12 @@
                     </ul>
                 </div>
             </div>
+            
             <div class="pt-8 mt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-                <p>© 2025 Chad Keith / Convers-a-trait™. All Rights Reserved.</p>
-                <p class="mt-2">This website, its content, concept, branding, and business model are proprietary and confidential.</p>
-                <p class="mt-1">Unauthorized use or reproduction is strictly prohibited.</p>
+                <p>&copy; 2025 Convers-a-trait, Inc. All rights reserved.</p>
+                <p class="mt-2">Made with 💜 for better human communication.</p>
             </div>
+        </div>
     </footer>
 
     <!-- Mobile Menu (Hidden by default) -->
