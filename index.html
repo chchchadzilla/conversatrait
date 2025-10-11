@@ -1,965 +1,1234 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConversaTrait - Revolutionizing Personality Assessment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ConversaTrait - A Force Multiplier For Every Human</title>
+    <meta name="description" content="Technological Advancement Without Human Displacement. Augmented Intelligence For All.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script><style type="text/css" data-guidde-blur-css="true">
+/* Repetition and !important are needed to override host page top-level styles */
+/* CSS Variables are defined by JS */
+
+.GUIDDE-JS-BlurCandidate.GUIDDE-JS-BlurCandidate.GUIDDE-JS-BlurCandidate {
+    background-color: var(--guidde-highlight-bg) !important;
+    outline: var(--guidde-highlight-border) !important;
+}
+
+.GUIDDE-JS-AutoBlurred.GUIDDE-JS-AutoBlurred.GUIDDE-JS-AutoBlurred,
+.GUIDDE-JS-Blurred.GUIDDE-JS-Blurred.GUIDDE-JS-Blurred {
+    filter: var(--guidde-blur) !important;
+}
+</style>
+    
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         :root {
-            --primary-glow: #00d4ff;
-            --secondary-glow: #ff0080;
-            --accent-glow: #00ff88;
-            --dark-bg: #0a0a0a;
-            --gradient-bg: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --mid-gray: #666666;
+            --white: #ffffff;
+            --crimson: #DC143C;
+            --bright-red: #FF4444;
+            --dark-red: #8B0000;
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
             overflow-x: hidden;
-            color: #f0f0f0;
+            line-height: 1.6;
+        }
+        
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* Main Content */
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Section Styling */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
             position: relative;
         }
         
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 0, 128, 0.05) 0%, transparent 20%);
-            z-index: -2;
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            background: transparent;
         }
         
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-        }
-        
-        .orbitron {
-            font-family: 'Orbitron', monospace;
-        }
-        
-        .glow-text {
-            text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
-        }
-        
-        .glow-border {
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-        }
-        
-        .grid-bg {
-            background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        
-        .floating-particles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-            top: 0;
-            left: 0;
-        }
-        
-        .particle {
-            position: absolute;
-            width:  2px;
-            height:  2px;
-            background:   v ar (--primary-glow);
-            border-radius: 50%;
-            animation:float 10s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(56deg); opacity: 0; }
-            50% { transform: translateY(-100px) rotate(162deg); opacity: 1; }
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .neon-button {
-            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-            transition: transform 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .neon-button::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(25deg);
-            transition: all 0.7s;
-        }
-        
-        .neon-button:hover::after {
-            left: 120%;
-        }
-        
-        .neon-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 0 25px var(--primary-glow);
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .feature-icon {
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .countdown-digit {
-            font-size: 3rem;
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
             font-weight: 900;
-            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
         
-        .scroll-indicator {
-            position: fixed;
-            top: 50%;
-            right: 2rem;
-            transform: translateY(-50%);
-            z-index: 1000;
+        .hero .tagline {
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            font-weight: 600;
+            color: var(--crimson);
+            margin-bottom: 2rem;
+            letter-spacing: -0.01em;
         }
         
-        .scroll-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 1rem 0;
+        .hero .subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: var(--mid-gray);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            background: var(--crimson);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.4);
+            position: relative;
+            overflow: hidden;
         }
         
-        .scroll-dot.active {
-            background: var(--primary-glow);
-            box-shadow: 0 0 15px var(--primary-glow);
+        .cta-button:hover {
+            background: var(--bright-red);
+            box-shadow: 0 0 50px rgba(220, 20, 60, 0.7);
+            transform: translateY(-2px);
         }
         
-        .form-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--crimson);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 12px;
+            background: var(--crimson);
+            border-radius: 3px;
+            animation: scroll-down 2s infinite;
+        }
+        
+        @keyframes scroll-down {
+            0%, 100% {
+                top: 8px;
+                opacity: 1;
+            }
+            50% {
+                top: 24px;
+                opacity: 0.5;
+            }
+        }
+        
+        /* What It Is Section */
+        .what-it-is {
+            background: rgba(26, 26, 26, 0.7);
+            text-align: center;
+        }
+        
+        .what-it-is h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--crimson);
+        }
+        
+        .what-it-is .content-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .what-it-is p {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .what-it-is .highlight {
+            color: var(--crimson);
+            font-weight: 600;
+        }
+        
+        .what-it-is .emphasis {
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-top: 2rem;
+        }
+        
+        /* Mission Section */
+        .mission {
+            background: rgba(10, 10, 10, 0.8);
+            text-align: center;
+            position: relative;
+        }
+        
+        .mission::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+        }
+        
+        .mission h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: var(--crimson);
+            letter-spacing: -0.02em;
+        }
+        
+        .mission .mission-statement {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            line-height: 1.4;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .mission p {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .mission .superhero {
+            color: var(--crimson);
+            font-weight: 700;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: rgba(26, 26, 26, 0.7);
+            min-height: 80vh;
+        }
+        
+        .contact h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--crimson);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .contact-card {
+            background: rgba(26, 26, 26, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(220, 20, 60, 0.2);
             transition: all 0.3s ease;
         }
         
-        .form-input:focus {
-            border-color: var(--primary-glow);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        .contact-card:hover {
+            border-color: var(--crimson);
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.2);
         }
         
-        .project-card {
-            transition: all 0.5s ease;
-            transform: perspective(1000px) rotateY(0deg);
+        .contact-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--crimson);
         }
         
-        .project-card:hover {
-            transform: perspective(1000px) rotateY(-5deg) translateZ(50px);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
         
-        .pulse-ring {
-            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
         
-        @keyframes pulse-ring {
-            0% { transform: scale(0.33); }
-            40%, 50% { opacity: 0; }
-            100% { transform: scale(1.2); opacity: 0; }
+        .contact-item label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--mid-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
-        .typing-effect {
-            border-right: 2px solid var(--primary-glow);
-            animation: blink 1s infinite;
+        .contact-item a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
         
-        @keyframes blink {
-            0%, 50% { border-color: transparent; }
-            51%, 100% { border-color: var(--primary-glow); }
+        .contact-item a:hover {
+            color: var(--crimson);
         }
         
-        .parallax-section {
-            transform: translateZ(0);
-            will-change: transform;
+        .contact-item .phone-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--crimson);
         }
         
-        .cyber-grid {
-            position: relative;
-            overflow: hidden;
+        .contact-item .phone-subtext {
+            font-size: 0.9rem;
+            color: var(--mid-gray);
+            font-weight: 400;
         }
         
-        .cyber-grid::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.9);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--dark-gray);
         }
         
-        .glitch-text {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .glitch-text::before,
-        .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .glitch-text::before {
-            left: 2px;
-            color: var(--secondary-glow);
-            z-index: -1;
-            text-shadow: 2px 0 0 #00ff88;
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-        
-        .glitch-text::after {
-            left: -2px;
-            color: var(--accent-glow);
-            z-index: -2;
-            text-shadow: -2px 0 0 #ff0080;
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-        
-        @keyframes glitch-anim-1 {
-            0% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
-            5% { clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%); }
-            10% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-            15% { clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%); }
-            20% { clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%); }
-            25% { clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%); }
-            30% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); }
-            35% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
-            40% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-            45% { clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%); }
-            50% { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%); }
-            55% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); }
-            60% { clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%); }
-            65% { clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%); }
-            70% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
-            75% { clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%); }
-            80% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-            85% { clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%); }
-            90% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); }
-            95% { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%); }
-            100% { clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%); }
-        }
-        
-        @keyframes glitch-anim-2 {
-            0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-            5% { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%); }
-            10% { clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%); }
-            15% { clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%); }
-            20% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); }
-            25% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-            30% { clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%); }
-            35% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
-            40% { clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%); }
-            45% { clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%); }
-            50% { clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%); }
-            55% { clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%); }
-            60% { clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%); }
-            65% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
-            70% { clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%); }
-            75% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-            80% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); }
-            85% { clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%); }
-            90% { clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%); }
-            95% { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%); }
-            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-        }
-        
-        .hologram {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hologram::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .hologram:hover::before {
-            left: 100%;
-        }
-        
-        .cyber-badge {
-            position: relative;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 4px;
-            display: inline-block;
-            margin-top: 1rem;
-        }
-        
-        .cyber-badge::before {
-            content: "";
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            z-index: -1;
-            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
-            border-radius: 6px;
-            opacity: 0.5;
-        }
-        
-        .terminal {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: monospace;
+        footer p {
             font-size: 1rem;
-            overflow: hidden;
-        }
-        
-        .terminal-line {
+            color: var(--mid-gray);
             margin-bottom: 0.5rem;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid var(--primary-glow);
-            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
         }
         
-        .terminal-prompt::before {
-            content: "> ";
-            color: var(--primary-glow);
+        footer .copyright {
+            font-size: 0.9rem;
+            color: var(--mid-gray);
         }
         
-        .terminal-response {
-            color: var(--accent-glow);
-        }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary-glow); }
-        }
-        
-        .feature-card {
-            transition: all 0.4s ease;
-            transform: translateZ(0);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-        }
-        
-        .pulse-button {
-            position: relative;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 15px rgba(0, 212, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
-            }
-        }
-        
-        .stats-card {
-            transform: perspective(1000px) rotateY(5deg);
-            transition: all 0.5s ease;
-        }
-        
-        .stats-card:hover {
-            transform: perspective(1000px) rotateY(0);
-        }
-        
-        .glow-border {
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-        }
-        
-        .pulse-element {
-            animation: pulse-ring 3s ease-out infinite;
-        }
-        
-        .holographic-glow {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .holographic-glow::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(25deg);
-            transition: all 0.7s;
-        }
-        
-        .holographic-glow:hover::after {
-            left: 120%;
-        }
-        
-        /* Responsive adjustments */
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-text {
-                font-size: 2.5rem !important;
+            section {
+                padding: 3rem 1.5rem;
             }
             
-            .scroll-indicator {
-                right: 1rem;
-            }
-            
-            .scroll-dot {
-                width: 10px;
-                height: 10px;
-            }
-            
-            .countdown-digit {
-                font-size: 2rem;
+            .contact-grid {
+                grid-template-columns: 1fr;
             }
         }
         
-        @media (max-width: 480px) {
-            .hero-text {
-                font-size: 2rem !important;
-            }
-            
-            .countdown-timer {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-            
-            .terminal {
-                padding: 1rem;
-                font-size: 0.8rem;
-            }
+        /* Fade-in animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .fade-in-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
     </style>
-</head>
-<body class="bg-gray-900 text-white">
-    <!-- Floating Particles -->
-    <div class="floating-particles" id="particles"></div>
+</head><guidde-record id="GUIDDE_JS_RECORD_UI" dir="ltr" style="position: relative; z-index: 999999999;"><template shadowrootmode="open"><head><style data-emotion="shadow-css" data-s=""></style><style></style><style data-jss="" data-meta="makeStyles">
+.jss1 {
+  font-size: 34px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 42px;
+}
+.jss2 {
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  line-height: 24px;
+}
+.jss3 {
+  background: rgba(9, 12, 16, 0.08);
+}
+.jss4 {
+  top: 0;
+  right: 0;
+  margin: 4px;
+  padding: 4px;
+  position: absolute;
+}
+</style><style data-jss="" data-meta="makeStyles">
+.jss5 {
+  font-size: 34px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 42px;
+}
+.jss6 {
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  line-height: 24px;
+}
+.jss7 {
+  background: rgba(9, 12, 16, 0.08);
+}
+.jss8 {
+  top: 0;
+  right: 0;
+  margin: 4px;
+  padding: 4px;
+  position: absolute;
+}
+</style><link rel="stylesheet" href="chrome-extension://oacmmmjedhheaijfjidilonpngccnhdl/cs/rec/index.css"><style id="fa-styles">:root, :host {
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+  --fa-font-light: normal 300 1em/1 "Font Awesome 6 Pro";
+  --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Pro";
+  --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-regular: normal 400 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-light: normal 300 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-thin: normal 100 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+  --fa-font-sharp-solid: normal 900 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-regular: normal 400 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-light: normal 300 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-thin: normal 100 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-duotone-solid: normal 900 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-regular: normal 400 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-light: normal 300 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-thin: normal 100 1em/1 "Font Awesome 6 Sharp Duotone";
+}
+
+svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.svg-inline--fa.fa-2xs {
+  vertical-align: 0.1em;
+}
+.svg-inline--fa.fa-xs {
+  vertical-align: 0em;
+}
+.svg-inline--fa.fa-sm {
+  vertical-align: -0.0714285705em;
+}
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.2em;
+}
+.svg-inline--fa.fa-xl {
+  vertical-align: -0.25em;
+}
+.svg-inline--fa.fa-2xl {
+  vertical-align: -0.3125em;
+}
+.svg-inline--fa.fa-pull-left {
+  margin-right: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-pull-right {
+  margin-left: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-li {
+  width: var(--fa-li-width, 2em);
+  top: 0.25em;
+}
+.svg-inline--fa.fa-fw {
+  width: var(--fa-fw-width, 1.25em);
+}
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-layers-counter, .fa-layers-text {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+.fa-layers svg.svg-inline--fa {
+  transform-origin: center center;
+}
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+}
+
+.fa-layers-counter {
+  background-color: var(--fa-counter-background-color, #ff253a);
+  border-radius: var(--fa-counter-border-radius, 1em);
+  box-sizing: border-box;
+  color: var(--fa-inverse, #fff);
+  line-height: var(--fa-counter-line-height, 1);
+  max-width: var(--fa-counter-max-width, 5em);
+  min-width: var(--fa-counter-min-width, 1.5em);
+  overflow: hidden;
+  padding: var(--fa-counter-padding, 0.25em 0.5em);
+  right: var(--fa-right, 0);
+  text-overflow: ellipsis;
+  top: var(--fa-top, 0);
+  transform: scale(var(--fa-counter-scale, 0.25));
+  transform-origin: top right;
+}
+
+.fa-layers-bottom-right {
+  bottom: var(--fa-bottom, 0);
+  right: var(--fa-right, 0);
+  top: auto;
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: bottom right;
+}
+
+.fa-layers-bottom-left {
+  bottom: var(--fa-bottom, 0);
+  left: var(--fa-left, 0);
+  right: auto;
+  top: auto;
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: bottom left;
+}
+
+.fa-layers-top-right {
+  top: var(--fa-top, 0);
+  right: var(--fa-right, 0);
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: top right;
+}
+
+.fa-layers-top-left {
+  left: var(--fa-left, 0);
+  right: auto;
+  top: var(--fa-top, 0);
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: top left;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-2xs {
+  font-size: 0.625em;
+  line-height: 0.1em;
+  vertical-align: 0.225em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+  line-height: 0.0833333337em;
+  vertical-align: 0.125em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+  line-height: 0.0714285718em;
+  vertical-align: 0.0535714295em;
+}
+
+.fa-lg {
+  font-size: 1.25em;
+  line-height: 0.05em;
+  vertical-align: -0.075em;
+}
+
+.fa-xl {
+  font-size: 1.5em;
+  line-height: 0.0416666682em;
+  vertical-align: -0.125em;
+}
+
+.fa-2xl {
+  font-size: 2em;
+  line-height: 0.03125em;
+  vertical-align: -0.1875em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: var(--fa-li-margin, 2.5em);
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: calc(-1 * var(--fa-li-width, 2em));
+  position: absolute;
+  text-align: center;
+  width: var(--fa-li-width, 2em);
+  line-height: inherit;
+}
+
+.fa-border {
+  border-color: var(--fa-border-color, #eee);
+  border-radius: var(--fa-border-radius, 0.1em);
+  border-style: var(--fa-border-style, solid);
+  border-width: var(--fa-border-width, 0.08em);
+  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);
+}
+
+.fa-pull-left {
+  float: left;
+  margin-right: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-pull-right {
+  float: right;
+  margin-left: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-beat {
+  animation-name: fa-beat;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-bounce {
+  animation-name: fa-bounce;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+}
+
+.fa-fade {
+  animation-name: fa-fade;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-beat-fade {
+  animation-name: fa-beat-fade;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-flip {
+  animation-name: fa-flip;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-shake {
+  animation-name: fa-shake;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin {
+  animation-name: fa-spin;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 2s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin-reverse {
+  --fa-animation-direction: reverse;
+}
+
+.fa-pulse,
+.fa-spin-pulse {
+  animation-name: fa-spin;
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, steps(8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-beat,
+.fa-bounce,
+.fa-fade,
+.fa-beat-fade,
+.fa-flip,
+.fa-pulse,
+.fa-shake,
+.fa-spin,
+.fa-spin-pulse {
+    animation-delay: -1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+@keyframes fa-beat {
+  0%, 90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(var(--fa-beat-scale, 1.25));
+  }
+}
+@keyframes fa-bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+  }
+  50% {
+    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes fa-fade {
+  50% {
+    opacity: var(--fa-fade-opacity, 0.4);
+  }
+}
+@keyframes fa-beat-fade {
+  0%, 100% {
+    opacity: var(--fa-beat-fade-opacity, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(var(--fa-beat-fade-scale, 1.125));
+  }
+}
+@keyframes fa-flip {
+  50% {
+    transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+  }
+}
+@keyframes fa-shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%, 24% {
+    transform: rotate(-18deg);
+  }
+  12%, 28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%, 100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.fa-rotate-90 {
+  transform: rotate(90deg);
+}
+
+.fa-rotate-180 {
+  transform: rotate(180deg);
+}
+
+.fa-rotate-270 {
+  transform: rotate(270deg);
+}
+
+.fa-flip-horizontal {
+  transform: scale(-1, 1);
+}
+
+.fa-flip-vertical {
+  transform: scale(1, -1);
+}
+
+.fa-flip-both,
+.fa-flip-horizontal.fa-flip-vertical {
+  transform: scale(-1, -1);
+}
+
+.fa-rotate-by {
+  transform: rotate(var(--fa-rotate-angle, 0));
+}
+
+.fa-stack {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2em;
+  position: relative;
+  width: 2.5em;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--fa-stack-z-index, auto);
+}
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em;
+}
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em;
+}
+
+.fa-inverse {
+  color: var(--fa-inverse, #fff);
+}
+
+.sr-only,
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:not(:focus),
+.fa-sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.svg-inline--fa .fa-primary {
+  fill: var(--fa-primary-color, currentColor);
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa .fa-secondary {
+  fill: var(--fa-secondary-color, currentColor);
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-primary {
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-secondary {
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa mask .fa-primary,
+.svg-inline--fa mask .fa-secondary {
+  fill: black;
+}</style><style data-emotion="design-system-css-global" data-s=""></style></head><div style="font-family: Inter, sans-serif;"></div></template></guidde-record>
+<body style="">
+    <!-- Particles Background -->
+    <div id="particles-js"><canvas class="particles-js-canvas-el" width="1168" height="908" style="width: 100%; height: 100%;"></canvas></div>
     
-    <!-- Scroll Navigation -->
-    <div class="scroll-indicator">
-        <div class="scroll-dot active" data-section="hero"></div>
-        <div class="scroll-dot" data-section="countdown"></div>
-        <div class="scroll-dot" data-section="features"></div>
-        <div class="scroll-dot" data-section="projects"></div>
-        <div class="scroll-dot" data-section="contact"></div>
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                A Force Multiplier<br>
+                For Every Human
+            </h1>
+            <p class="tagline fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Augmented Intelligence For All</p>
+            <p class="subtitle fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Multiply Your Force At Conversatrait.com</p>
+            <a href="#" class="cta-button fade-in" id="beta-btn" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Join Beta Waitlist</a>
+            <div class="scroll-indicator"></div>
+        </section>
+        
+        <!-- What It Is Section -->
+        <section class="what-it-is" style="translate: none; rotate: none; scale: none; opacity: 0.8; transform: translate(0px, 50px);">
+            <h2 class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">What It Is</h2>
+            <div class="content-grid">
+                <p class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Traditional personality tests lie.</p>
+                <p class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">People game Myers-Briggs. Fake DISC assessments.</p>
+                <p class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;"><span class="highlight">ConversaTrait analyzes real conversations using AI.</span></p>
+                <p class="emphasis fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">You can't cheat a conversation you've already had.</p>
+                <p class="fade-in" style="font-size: 1.1rem; color: var(--mid-gray); margin-top: 1rem; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                    You can't "game" something that's already happened that you didn't know you were being assessed on.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Mission Section -->
+        <section class="mission" style="translate: none; rotate: none; scale: none; opacity: 0.8; transform: translate(0px, 50px);">
+            <h2 class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">The Mission</h2>
+            <p class="mission-statement fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                Technological Advancement<br>
+                Without Human Displacement
+            </p>
+            <p class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                We don't replace therapists, HR professionals, or coaches.
+            </p>
+            <p class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                We turn them into <span class="superhero">superheroes</span>.
+            </p>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact" style="translate: none; rotate: none; scale: none; opacity: 0.8; transform: translate(0px, 50px);">
+            <h2 class="fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                    <h3>Join The Beta</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--mid-gray);">
+                        Be among the first to experience the future of personality assessment.
+                    </p>
+                    <a href="#" class="cta-button" id="beta-btn-2" style="display: block; text-align: center; padding: 1rem 2rem;">
+                        Join Waitlist
+                    </a>
+                </div>
+                
+                <div class="contact-card fade-in" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <label>Email</label>
+                            <a href="mailto:chad@conversatrait.com">chad@conversatrait.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <label>Phone</label>
+                            <div class="phone-number">1 (252) 5-AI-CHAD</div>
+                            <div class="phone-subtext">(252) 524-2423</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <p>Built to leave the world better than we found it.</p>
+            <p class="copyright">© 2025 ConversaTrait. All rights reserved.</p>
+        </footer>
     </div>
     
-    <!-- Hero Section -->
-    <section id="hero" class="min-h-screen cyber-grid flex items-center justify-center relative overflow-hidden">
-        <div class="container mx-auto px-6 text-center z-10 relative">
-            <div class="cyber-badge mb-6">EXCLUSIVE BETA ACCESS</div>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold orbitron mb-6 hero-text">
-                <span class="glitch-text" data-text="ConversaTrait">ConversaTrait</span>
-            </h1>
-            <p class="text-xl md:text-2xl mb-6 text-gray-300">Revolutionary AI-Powered Personality Assessment</p>
-            <div class="text-lg md:text-xl mb-10 text-gray-400 max-w-3xl mx-auto">
-                Join the exclusive closed beta launching <span class="text-cyan-400 font-bold">September 1st, 2025 at 8:00 AM PST</span>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-                <button class="neon-button px-8 py-4 rounded-full text-lg font-bold text-white pulse-button hover:scale-105 transition-transform" onclick="scrollToSection('countdown')">
-                    JOIN WAITLIST NOW
-                </button>
-                <button class="border border-cyan-400 px-8 py-4 rounded-full text-lg font-bold text-cyan-400 hover:bg-cyan-400 hover:text-gray-900 transition-colors" onclick="scrollToSection('features')">
-                    EXPLORE FEATURES
-                </button>
-            </div>
-            <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-                <div class="glass-card p-4 rounded-xl hologram">
-                    <div class="text-2xl font-bold text-cyan-400">17+</div>
-                    <div class="text-gray-300">Frameworks</div>
-                </div>
-                <div class="glass-card p-4 rounded-xl hologram">
-                    <div class="text-2xl font-bold text-cyan-400">93%+</div>
-                    <div class="text-gray-300">Accuracy</div>
-                </div>
-                <div class="glass-card p-4 rounded-xl hologram">
-                    <div class="text-2xl font-bold text-cyan-400">25</div>
-                    <div class="text-gray-300">Beta Spots</div>
-                </div>
-            </div>
-        </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-cyan-400 text-2xl"></i>
-        </div>
-    </section>
-    
-    <!-- Countdown Section -->
-    <section id="countdown" class="py-20 bg-gradient-to-b from-gray-900 to-gray-800 relative">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold orbitron mb-6 glow-text">Countdown to Beta Launch</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12 countdown-timer" id="countdown-timer">
-                <div class="glass-card p-6 rounded-xl hologram">
-                    <div class="countdown-digit" id="days">00</div>
-                    <div class="text-gray-400">Days</div>
-                </div>
-                <div class="glass-card p-6 rounded-xl hologram">
-                    <div class="countdown-digit" id="hours">00</div>
-                    <div class="text-gray-400">Hours</div>
-                </div>
-                <div class="glass-card p-6 rounded-xl hologram">
-                    <div class="countdown-digit" id="minutes">00</div>
-                    <div class="text-gray-400">Minutes</div>
-                </div>
-                <div class="glass-card p-6 rounded-xl hologram">
-                    <div class="countdown-digit" id="seconds">00</div>
-                    <div class="text-gray-400">Seconds</div>
-                </div>
-            </div>
-            <div class="terminal max-w-2xl mx-auto mb-12">
-                <div class="terminal-line">> Initializing personality assessment protocols...</div>
-                <div class="terminal-line">> Loading psychoanalytical frameworks...</div>
-                <div class="terminal-line">> Status: <span class="text-green-500">Operational</span></div>
-                <div class="terminal-line">> Secure beta access granted to first 25 participants</div>
-                <div class="terminal-line">> <span class="typing-effect">All systems nominal. Ready for deployment.</span></div>
-            </div>
-            <div class="max-w-3xl mx-auto glass-card p-6 rounded-xl">
-                <h3 class="text-2xl font-bold mb-4 text-cyan-400">Beta Tester Benefits</h3>
-                <ul class="text-left text-gray-300 space-y-2">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-cyan-400 mt-1 mr-2"></i>
-                        <span>Free access to all personality assessment modules for life</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-cyan-400 mt-1 mr-2"></i>
-                        <span>Get deep insights into your own personality</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-cyan-400 mt-1 mr-2"></i>
-                        <span>Exclusive access to new features and frameworks</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-cyan-400 mt-1 mr-2"></i>
-                        <span>Direct influence on the final product development</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Features Section -->
-    <section id="features" class="py-20 grid-bg relative">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold orbitron text-center mb-16 glow-text">What Makes ConversaTrait Special</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">🧠</div>
-                    <h3 class="text-xl font-bold mb-3">17+ Psychoanalytical Frameworks</h3>
-                    <p class="text-gray-300">From BFI & MBTI, to proprietary frameworks developed in-house, get stunning personality profiles in seconds</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">🔍</div>
-                    <h3 class="text-xl font-bold mb-3">Bullshit Detector™</h3>
-                    <p class="text-gray-300">Detect deception in work emails and communications, picking up on subtle linguistic cues, and temporal date/time analysis</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">💡</div>
-                    <h3 class="text-xl font-bold mb-3">Hidden Talent Finder</h3>
-                    <p class="text-gray-300">Discover your untapped potential by analyzing your existing skill combinations that are displayed in your conversations</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">🎯</div>
-                    <h3 class="text-xl font-bold mb-3">AITA Mode</h3>
-                    <p class="text-gray-300">"Am I The Asshole?" Helps you determine if... well, if "You're The Asshole", or if "Everyone Here Sucks"</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">📊</div>
-                    <h3 class="text-xl font-bold mb-3">Historical Analysis</h3>
-                    <p class="text-gray-300">Track personality changes over time as you grow and improve</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl feature-card hologram">
-                    <div class="text-4xl mb-4 feature-icon">💕</div>
-                    <h3 class="text-xl font-bold mb-3">Romantic Attraction Analysis</h3>
-                    <p class="text-gray-300">Get insights into subtle nuances in conversation data to determine if there's a genuine attraction, or just being polite</p>
-                </div>
-            </div>
-            
-            <div class="mt-20 max-w-4xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-8">
-                    <div class="flex-1 stats-card glass-card p-6 rounded-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-cyan-400">Precision Metrics</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>Personality Framework Accuracy</span>
-                                    <span>93.2%</span>
-                                </div>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-cyan-500 h-2.5 rounded-full" style="width: 93.2%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>Deception Detection Rate</span>
-                                    <span>82.1%</span>
-                                </div>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-pink-500 h-2.5 rounded-full" style="width: 82.1%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span>Talent Identification</span>
-                                    <span>85.4%</span>
-                                </div>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-green-500 h-2.5 rounded-full" style="width: 85.4%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-1 glass-card p-6 rounded-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-cyan-400">Technical Stack</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center">
-                                <i class="fab fa-python text-cyan-400 text-2xl mr-3"></i>
-                                <span>Python/PyTorch & Same Day support for all flagship models!</span></span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fab fa-node-js text-green-400 text-2xl mr-3"></i>
-                                <span>Flask/Python Backend</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fab fa-react text-cyan-300 text-2xl mr-3"></i>
-                                <span>Tailwind/React Frontend</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-database text-yellow-400 text-2xl mr-3"></i>
-                                <span>Local Results Storage!</span>
-                            </div>
-                        </div>
-                        <div class="mt-6 p-4 bg-gray-800 rounded-lg">
-                            <p class="text-sm text-gray-400">All processing done client-side to preserve privacy. Your data never leaves your device. You keep it - We don't even WANT it!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gradient-to-b from-gray-800 to-gray-900 relative">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold orbitron text-center mb-16 glow-text">Other Projects by Chad Keith</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="project-card glass-card p-6 rounded-2xl hologram">
-                    <h3 class="text-2xl font-bold mb-3 orbitron text-cyan-300">SixtyMin.Site</h3>
-                    <p class="text-gray-300 mb-4">Website in 60 minutes or it's FREE. Lightning-fast web development for businesses that need results NOW.</p>
-                    <a href="http://www.sixtymin.site" class="text-cyan-400 hover:text-cyan-300 inline-flex items-center">
-                        Visit Site <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                    </a>
-                </div>
-                <div class="project-card glass-card p-6 rounded-2xl hologram">
-                    <h3 class="text-2xl font-bold mb-3 orbitron text-cyan-300">Acceptbl AI</h3>
-                    <p class="text-gray-300 mb-4">AI consulting that save up to 99.9998% on cloud GPU costs¹ "Change what's considered Acceptable"</p>
-                    <a href="http://www.acceptbl.com" class="text-cyan-400 hover:text-cyan-300 inline-flex items-center">
-                        Visit Site <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                    </a>
-                </div>
-                <div class="project-card glass-card p-6 rounded-2xl hologram">
-                    <h3 class="text-2xl font-bold mb-3 orbitron text-cyan-300">InstaFams</h3>
-                    <p class="text-gray-300 mb-4">Preserve your family's legacy with AI-powered interviews. Talk to your deceased loved ones through AI recreation.</p>
-                    <a href="http://www.instafams.com" class="text-cyan-400 hover:text-cyan-300 inline-flex items-center">
-                        Visit Site <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="text-2xs font-med mt-4 text-gray-300 hover:text-gray-100 hover: mb-1 text-center glow-text items-center">
-            <p class="text-2xs font-bold mt-2 text-gray-500 hover:text-cyan-700">¹Results from previous client. While we give every effort that ALL clients receive savings this immense, we can not guarantee EVERY client will experience the same exact results. Your results are based off your specific, unique situation, and may not be in the realm of possibilities to receive savings this extreme.</p>
-        </div>
-    </section> 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-bold orbitron mb-6 glow-text">Join the Beta Waitlist</h2>
-                <p class="text-xl mb-12 text-gray-300">Be among the first 100 to experience the future of personality assessment</p>
-                
-                <div class="glass-card p-8 rounded-2xl mx-auto max-w-2xl hologram">
-                    <form id="waitlist-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-gray-400 mb-2 text-left">First Name</label>
-                                <input type="text" class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="Enter your first name" required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-400 mb-2 text-left">Last Name</label>
-                                <input type="text" class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="Enter your last name" required>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 mb-2 text-left">Email Address</label>
-                            <input type="email" class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="Enter your email" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 mb-2 text-left">Why do you want to join the beta?</label>
-                            <textarea class="form-input w-full px-4 py-3 rounded-lg text-white" rows="3" placeholder="Share your interest in ConversaTrait"></textarea>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="terms" class="mr-2 h-5 w-5 text-cyan-500" required>
-                            <label for="terms" class="text-gray-400 text-left">I agree to receive updates about ConversaTrait and related products</label>
-                        </div>
-                        <button type="submit" class="neon-button w-full py-4 rounded-full text-xl font-bold text-white pulse-button">
-                            JOIN WAITLIST
-                        </button>
-                    </form>
-                </div>
-                
-                <div class="mt-12 flex justify-center space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-cyan-400 text-2xl">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-cyan-400 text-2xl">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-cyan-400 text-2xl">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="py-8 border-t border-gray-800">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-500">© 2025 ConversaTrait. All rights reserved.</p>
-            <p class="text-gray-600 mt-2">ConversaTrait is developed by Chad Keith</p>
-        </div>
-    </footer>
-    
     <script>
-        // Initialize particles
-        document.addEventListener('DOMContentLoaded', function() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 100;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random positioning
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                
-                // Random animation delay and duration
-                const delay = Math.random() * 6;
-                const duration = 3 + Math.random() * 6;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Random size variation
-                const size = 1 + Math.random() * 3;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particlesContainer.appendChild(particle);
-            }
-            
-            // Scroll navigation
-            document.querySelectorAll('.scroll-dot').forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const sectionId = dot.getAttribute('data-section');
-                    document.getElementById(sectionId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Update active scroll dot on scroll
-            window.addEventListener('scroll', () => {
-                const sections = document.querySelectorAll('section');
-                const scrollPosition = window.scrollY + 100;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        document.querySelectorAll('.scroll-dot').forEach(dot => {
-                            dot.classList.remove('active');
-                            if (dot.getAttribute('data-section') === sectionId) {
-                                dot.classList.add('active');
-                            }
-                        });
+        // Particles.js Configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
                     }
-                });
-            });
-            
-            // Countdown timer
-            function updateCountdown() {
-                const targetDate = new Date('September 1, 2025 08:06:00 PST').getTime();
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-                
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').innerText = days.toString().padStart(2, '0');
-                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
-                
-                if (distance < 0) {
-                    document.getElementById('countdown-timer').innerHTML = "<div class='col-span-4 text-2xl text-cyan-400'>Launch Complete!</div>";
+                },
+                color: {
+                    value: ['#DC143C', '#ffffff']
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#DC143C',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
                 }
-            }
-            
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-            
-            // Form submission
-            document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for joining our waitlist! We will contact you soon.');
-                this.reset();
-            });
-            
-            // Smooth scrolling for buttons
-            document.querySelectorAll('.neon-button').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    if (this.getAttribute('onclick')) {
-                        return;
-                    }
-                    
-                    const targetSection = this.getAttribute('data-target');
-                    if (targetSection) {
-                        document.getElementById(targetSection).scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // GSAP animations
-            gsap.registerPlugin(ScrollTrigger);
-            
-            // Animate features on scroll
-            gsap.utils.toArray('.feature-card').forEach((card, i) => {
-                gsap.fromTo(card, {
-                    opacity: 0,
-                    y: 50
-                }, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 80%"
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
                     },
-                    delay: i * 0.1
-                });
-            });
-            
-            // Animate projects on scroll
-            gsap.utils.toArray('.project-card').forEach((card, i) => {
-                gsap.fromTo(card, {
-                    opacity: 0,
-                    x: -100
-                }, {
-                    opacity: 1,
-                    x: 0,
-                    duration: 0.8,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 80%"
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
                     },
-                    delay: i * 0.2
-                });
-            });
-            
-            // Terminal animation
-            const terminalLines = document.querySelectorAll('.terminal-line');
-            terminalLines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.style.opacity = 1;
-                }, index * 1500);
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // GSAP ScrollTrigger Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Fade in elements on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        fadeElements.forEach((element, index) => {
+            gsap.to(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: 'power2.out'
             });
         });
         
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
+        // Parallax effect for sections
+        gsap.utils.toArray('section').forEach((section, i) => {
+            if (i > 0) { // Skip hero section
+                gsap.fromTo(section,
+                    { y: 50, opacity: 0.8 },
+                    {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'top center',
+                            scrub: 1
+                        },
+                        y: 0,
+                        opacity: 1,
+                        ease: 'none'
+                    }
+                );
+            }
+        });
+        
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.what-it-is').scrollIntoView({
                 behavior: 'smooth'
             });
-        }
+        });
+        
+        // Beta button - Opens Google Form in new tab
+        const betaButtons = document.querySelectorAll('#beta-btn, #beta-btn-2');
+        betaButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open('https://forms.gle/sVX7rV8cZThSDLcq6', '_blank');
+            });
+        });
     </script>
-</body>
-</html>
+
+
+</body></html>
